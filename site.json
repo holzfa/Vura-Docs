@@ -1,0 +1,12 @@
+{
+  "title": "Aero",
+  "icon": "assets/aero.svg",
+  "default": "#language",
+  "variables": {
+    "version": "V0.3.0",
+    "status": "Work In Progress"
+  },
+  "docs": [
+    { "file": "content/spec.json", "title": "Language" }
+  ]
+}

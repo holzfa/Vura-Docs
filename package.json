@@ -1,0 +1,11 @@
+{
+  "name": "aero-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "live-server": "^1.2.2"
+  }
+}

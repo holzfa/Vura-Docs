@@ -1,0 +1,801 @@
+{
+  "format": 1,
+  "id": "#language",
+  "title": "Klar",
+  "description": "A <b>statically</b> typed, natively compiled language with Kotlin-style syntax and systems-level speed. No virtual machine or garbage collector, what you write is what runs.",
+  "badge": "v{{version}} · {{status}}",
+  "buttons": [
+    {
+      "title": "Read the Quickstart",
+      "link": "#quickstart"
+    },
+    {
+      "title": "Browse the Basics",
+      "link": "#basics"
+    }
+  ],
+  "sections": [
+    {
+      "id": "#overview",
+      "title": "Overview & Philosophy",
+      "content": [
+        "Klar is a statically typed, natively compiled programming language. It combines the readable, Kotlin-style syntax of a modern high-level language with the execution speed and predictable memory behavior of a systems language. Source code is compiled to LLVM IR and from there to native machine code, there is no bytecode and no interpreter.",
+        {
+          "type": "badge",
+          "title": "Target: LLVM"
+        },
+        {
+          "type": "badge",
+          "title": "Memory: reference counted, no GC",
+          "variant": "neutral"
+        },
+        {
+          "type": "badge",
+          "title": "Stack by default",
+          "variant": "outline"
+        }
+      ],
+      "sections": [
+        {
+          "id": "#design-goals",
+          "title": "Design Goals",
+          "content": [
+            "Klar is a statically typed compiled programming language designed to combine the readability of modern high-level languages with the performance of systems languages. This document describes Klar v{{version}}. The language is small on purpose: readability is preferred over feature count, and every feature has to justify its complexity.",
+            "-- <b>Clarity</b>: code reads the way it behaves\n-- <b>Simplicity</b>: few concepts, each with one clear job\n-- <b>Predictable behavior</b>: no hidden allocations, no hidden control flow\n-- <b>Native performance</b>: fast enough to compete with Rust and C++\n-- <b>Safe by default</b>: low level control is explicit and only available through <code>unsafe</code>\n-- <b>Small but expressive</b>: structs and classes, traits, enums and expression based control flow cover most programs"
+          ]
+        },
+        {
+          "id": "#core-tenets",
+          "title": "Core Tenets",
+          "content": [
+            {
+              "type": "box",
+              "title": "Direct to native",
+              "subtitle": "No VM, no GC",
+              "content": [
+                "Klar compiles straight to LLVM IR and native machine code. Memory is released deterministically as soon as nothing references it anymore."
+              ]
+            },
+            {
+              "type": "box",
+              "title": "Predictable",
+              "subtitle": "No hidden costs",
+              "content": [
+                "No hidden allocations, no runtime tracing and no GC pauses. The compiler inserts reference counting code at predictable places."
+              ]
+            },
+            {
+              "type": "box",
+              "title": "Readable",
+              "subtitle": "Kotlin-style syntax",
+              "content": [
+                "Concise declarations, expression based control flow and type inference where the initial value makes the type obvious."
+              ]
+            },
+            {
+              "type": "box",
+              "title": "Safer memory",
+              "subtitle": "No pointers",
+              "content": [
+                "Pointer syntax and arithmetic do not exist. Low level control is opt-in through <code>unsafe</code>."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "#status",
+          "title": "Project Status",
+          "content": [
+            "Klar is built together with its reference compiler <b>Bloom</b>, written in C#. Whatever is specified but not implemented yet is marked as <i>planned</i>.",
+            {
+              "type": "table",
+              "headers": [
+                "Component",
+                "State"
+              ],
+              "rows": [
+                ["Lexer", "Working"],
+                ["Parser", "Working, better error recovery is planned"],
+                ["Type checker", "Working"],
+                ["Language server", "Working: diagnostics, completion, hover, go to definition, semantic colors"],
+                ["Code generation (LLVM)", "Starting"],
+                ["Runtime (reference counting)", "After code generation"]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "#quickstart",
+      "title": "Quickstart",
+      "content": [
+        "A first program, then the rest of the language in order from simple to complex. The chapters after this one follow that order, starting with <a href=\"#basics\">The Basics</a>."
+      ],
+      "sections": [
+        {
+          "id": "#hello-world",
+          "title": "Hello, Klar",
+          "content": [
+            "Every program starts at a function called <code>main</code>.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "title": "main.kl",
+              "code": "from core.system import print\n\nfun main() {\n    print(\"Hello, Klar!\")\n}"
+            },
+            "Line by line:\n-- <code>from core.system import print</code> makes the <code>print</code> function available in this file\n-- <code>fun</code> declares a function, functions are always written in camelCase\n-- <code>main</code> is the entry point\n-- no return type is written, so it returns <code>Void</code>, which means nothing"
+          ]
+        },
+        {
+          "id": "#build-and-run",
+          "title": "Build and Run",
+          "content": [
+            "The command line tool is called Bloom. It will compile a project to a native executable and run it.",
+            {
+              "type": "code",
+              "lang": "text",
+              "code": "bloom build\nbloom run"
+            },
+            {
+              "type": "callout",
+              "kind": "planned",
+              "content": [
+                "Bloom can parse and type check Klar code today, but turning it into an executable depends on code generation, which is not finished."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "#editor-support",
+          "title": "Editor Support",
+          "content": [
+            "A plugin for JetBrains IDEs adds syntax highlighting, semantic colors, code completion, hover information, go to definition and live error reporting for <code>.kl</code> files. It is backed by a language server built on the same lexer, parser and type checker as the compiler."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "#basics",
+      "title": "The Basics",
+      "content": [
+        "Everything a program needs before it does anything interesting: comments, variables, the built-in types and operators."
+      ],
+      "sections": [
+        {
+          "id": "#comments",
+          "title": "Comments",
+          "content": [
+            "Comments use the C style.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "// A single line comment\n\n/* A comment\n   over several lines */"
+            }
+          ]
+        },
+        {
+          "id": "#statements",
+          "title": "Statements",
+          "content": [
+            "A line break ends a statement. A semicolon ends it explicitly, which allows several statements on one line.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "val x = 1; val y = 2\nval z = x + y"
+            }
+          ]
+        },
+        {
+          "id": "#variables",
+          "title": "Variables",
+          "content": [
+            "A variable is introduced with one of three keywords. The type comes after the name and can be left out when the initial value makes it obvious.",
+            "-- <code>val</code> can be assigned once and is read-only afterwards\n-- <code>var</code> can be reassigned freely\n-- <code>const</code> is a compile time constant, inside a type it is also static",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "val maxSpeed: Int = 200\nvar speed = 0\nconst MAX_PLAYERS = 4\n\nspeed = 50\n// maxSpeed = 250   error: a val cannot be reassigned"
+            },
+            "Variables are camelCase. Constants are UPPER_CASE, so they stand out from everything else."
+          ]
+        },
+        {
+          "id": "#types",
+          "title": "Types",
+          "content": [
+            "All built-in types are written in PascalCase.",
+            {
+              "type": "table",
+              "headers": [
+                "Type",
+                "Description",
+                "Example"
+              ],
+              "rows": [
+                ["<code>Int</code>", "32-bit signed integer", "<code>42</code>, <code>0xFF</code>, <code>0b1010</code>"],
+                ["<code>Long</code>", "64-bit signed integer", "<code>42L</code>, <code>0xFFL</code>, <code>0b101L</code>"],
+                ["<code>Float</code>", "32-bit floating point number", "<code>3.14</code>"],
+                ["<code>Double</code>", "64-bit floating point number", "<code>3.14d</code>, <code>2d</code>"],
+                ["<code>Bool</code>", "true or false", "<code>true</code>"],
+                ["<code>Byte</code>", "8-bit integer", "<code>Byte::value</code>"],
+                ["<code>Char</code>", "a single character", "<code>'a'</code>"],
+                ["<code>String</code>", "UTF-8 text", "<code>\"Hello\"</code>"],
+                ["<code>Void</code>", "no value, the return type of functions that return nothing", "none"],
+                ["<code>Range</code>", "a range of Int values, the end is not included", "<code>1..10</code>"]
+              ]
+            },
+            "A number literal is an <code>Int</code> or a <code>Float</code> by default. A trailing <code>L</code> makes an integer a <code>Long</code>, a trailing <code>d</code> makes any number a <code>Double</code> and a trailing <code>f</code> makes any number a <code>Float</code>. In hexadecimal literals <code>d</code> and <code>f</code> are digits, so there only <code>L</code> works. An <code>Int</code> fits where a <code>Long</code> is expected and a <code>Float</code> where a <code>Double</code> is expected, but not inside arrays. Every other conversion between number types needs a cast such as <code>Int::count</code>."
+          ]
+        },
+        {
+          "id": "#strings",
+          "title": "Strings and Characters",
+          "content": [
+            "Strings use double quotes, characters single quotes. A string starting with <code>$</code> is interpolated: anything inside braces is an expression. Three double quotes start a string that spans several lines.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "val name = \"Klar\"\nval letter = 'K'\nval greeting = $\"Hello, {name}!\"\nval sum = $\"1 + 2 = {1 + 2}\"\nval poem = \"\"\"\nRoses are red,\nthis string spans lines.\n\"\"\""
+            }
+          ]
+        },
+        {
+          "id": "#operators",
+          "title": "Operators",
+          "content": [
+            {
+              "type": "table",
+              "headers": [
+                "Group",
+                "Operators",
+                "Notes"
+              ],
+              "rows": [
+                ["Arithmetic", "<code>+ - * / %</code>", "Mixing Int and Float gives a Float, a Long and an Int gives a Long, and a Double or a Long with a Float gives a Double. Dividing two whole numbers gives a Float, or a Double when a Long is involved"],
+                ["Comparison", "<code>== != < > <= >=</code>", "Equality needs both sides to have the same type. Structs compare their values, classes compare identity, see <a href=\"#custom-types_equality\">Equality</a>"],
+                ["Logical", "<code>&& || and or !</code>", "Work on Bool"],
+                ["Bitwise", "<code>& | ^ ~ << >></code>", "Work on Int, Long and Byte"],
+                ["Assignment", "<code>= += -= *= /= %= &= |= ^= <<= >>=</code>", "A statement, it produces no value"],
+                ["Range", "<code>..</code>", "Creates a Range, the end is not included"],
+                ["Cast", "<code>::</code>", "Written as <code>Type::value</code>"]
+              ]
+            },
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "val count = 10\nval ratio = count / 4            // 2.5, a Float\nval exact = Float::count / 4     // casts first, then divides\nvar total = 0\ntotal += 5"
+            },
+            {
+              "type": "callout",
+              "kind": "note",
+              "title": "Division",
+              "content": [
+                "Dividing two Ints gives a <code>Float</code>: <code>10 / 3</code> is 3.333..., not 3. Assignment is a statement, so chained assignment like <code>a = b = c</code> does not exist."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "#functions",
+      "title": "Functions",
+      "content": [
+        "Functions package code under a name. Names are camelCase."
+      ],
+      "sections": [
+        {
+          "id": "#declaring",
+          "title": "Declaring Functions",
+          "content": [
+            "A function has the keyword <code>fun</code>, a name, typed parameters and a return type after an arrow. Leaving the return type out means <code>Void</code>.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "fun add(a: Int, b: Int) -> Int {\n    return a + b\n}\n\nval total = add(2, 3)"
+            }
+          ]
+        },
+        {
+          "id": "#returning",
+          "title": "Returning Values",
+          "content": [
+            "The last expression of a function body is its result, so <code>return</code> is only needed to leave early.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "fun square(x: Int) -> Int {\n    x * x\n}\n\nfun clamp(value: Int, max: Int) -> Int {\n    if (value > max) { return max }\n    return value\n}"
+            }
+          ]
+        },
+        {
+          "id": "#expression-bodies",
+          "title": "Expression Bodies",
+          "content": [
+            "A body that is a single expression can be written after <code>=></code> instead of in braces.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "fun twice(x: Int) -> Int => x * 2\nfun greet(name: String) -> String => $\"Hello, {name}!\""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "#control-flow",
+      "title": "Control Flow",
+      "content": [
+        "Control flow in Klar is expression based: <code>if</code> produces a value. This removes the need for a ternary operator."
+      ],
+      "sections": [
+        {
+          "id": "#conditionals",
+          "title": "Conditionals",
+          "content": [
+            "The condition is wrapped in parentheses. Each branch is a block in braces, or a single expression after <code>=></code>. When the result is used as a value, every branch must have the same type and nullability, and an <code>else</code> is required.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "val label = if (count == 1) { \"item\" } else { \"items\" }\n\nval sign = if (n > 0) => \"positive\"\n    else if (n < 0) => \"negative\"\n    else => \"zero\""
+            }
+          ]
+        },
+        {
+          "id": "#while-loops",
+          "title": "While Loops",
+          "content": [
+            "<code>while</code> repeats its body as long as the condition holds. <code>break</code> leaves the loop and <code>continue</code> skips to the next round. Both are only allowed inside a loop.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "var counter = 3\nwhile (counter > 0) {\n    print($\"T-minus {counter}\")\n    counter -= 1\n}"
+            }
+          ]
+        },
+        {
+          "id": "#for-loops",
+          "title": "For Loops",
+          "content": [
+            "<code>for</code> walks over every element of an array or every value of a range. The end of a range is not included, so <code>1..4</code> covers 1, 2 and 3. The loop variable only exists inside the loop and its type can be written out if wanted.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "val numbers = [3, 1, 4, 1, 5]\nfor (n in numbers) {\n    print($\"Number {n}\")\n}\n\nfor (i in 1..10) {\n    if (i % 2 == 0) { continue }\n    if (i > 7) { break }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "#data",
+      "title": "Arrays and Nullability",
+      "sections": [
+        {
+          "id": "#arrays",
+          "title": "Arrays",
+          "content": [
+            "An array type is the element type followed by <code>[]</code>. Array literals use square brackets and elements are read with an index.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "val primes: Int[] = [2, 3, 5, 7]\nval first = primes[0]\nval grid: Int[][] = [[1, 2], [3, 4]]\nval count = primes.length   // 4"
+            },
+            "<code>length</code> gives the number of elements as an <code>Int</code>. It is read only."
+          ]
+        },
+        {
+          "id": "#nullability",
+          "title": "Nullability",
+          "content": [
+            "Types do not accept <code>null</code> by default. A question mark after the type makes it nullable. A non-nullable value can always be assigned to a nullable one, never the other way around.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "var nickname: String? = null\nnickname = \"Ace\"\n\nif (nickname != null) {\n    print(nickname)\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "#custom-types",
+      "title": "Custom Types",
+      "content": [
+        "Types group data and behavior. Klar has structs and classes, plus enums for fixed sets of values. Their names are PascalCase.",
+        {
+          "type": "table",
+          "headers": [
+            "Kind",
+            "Semantics",
+            "Allocated",
+            "Copied on assignment",
+            "Equality",
+            "Inheritance"
+          ],
+          "rows": [
+            ["<code>struct</code>", "value type", "stack", "yes", "by value", "no"],
+            ["<code>class</code>", "reference type", "heap", "no, the instance is shared", "by identity", "yes"],
+            ["<code>enum</code>", "value type", "stack", "yes", "by value", "no"]
+          ]
+        },
+        "Types have fields, functions and constructors. A <b>constructor</b> is written like a function without the <code>fun</code> keyword and carries the name of its type. A type can declare several constructors. A <code>val</code> field without an initial value has to be assigned in every constructor. Constructors are called by the name of the type, there is no <code>new</code>."
+      ],
+      "sections": [
+        {
+          "id": "#structs",
+          "title": "Structs",
+          "content": [
+            "A struct is a value type meant for small pieces of data, like a position, a color or a rectangle. Assigning it to a new variable copies it. A struct cannot inherit and cannot be extended. Inside a function of a struct, <code>self</code> is the instance.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "struct Point {\n    var x: Int\n    var y: Int\n\n    Point(x: Int, y: Int) {\n        self.x = x\n        self.y = y\n    }\n\n    fun offset(dx: Int, dy: Int) {\n        x += dx\n        y += dy\n    }\n}\n\nvar a = Point(1, 2)\nvar b = a          // b is a copy\nb.offset(10, 0)    // a is unchanged"
+            }
+          ]
+        },
+        {
+          "id": "#classes",
+          "title": "Classes",
+          "content": [
+            "A class is a reference type for objects that have an identity, like a window, a texture or a database connection. Constructing it allocates the instance on the heap, and assigning it to another variable shares the instance. How its lifetime is managed is explained in <a href=\"#memory_reference-counting\">Reference Counting</a>.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "class Player {\n    val name: String\n    private var health: Int = 100\n\n    Player(name: String) {\n        self.name = name\n    }\n\n    fun takeDamage(amount: Int) {\n        health -= amount\n    }\n\n    fun isAlive() -> Bool => health > 0\n}\n\nval hero = Player(\"Klar\")\nhero.takeDamage(30)"
+            },
+            "A class can declare several constructors.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "class Counter {\n    private var count: Int\n\n    Counter() {\n        count = 0\n    }\n\n    Counter(start: Int) {\n        count = start\n    }\n}"
+            }
+          ]
+        },
+        {
+          "id": "#equality",
+          "title": "Equality",
+          "content": [
+            "The <code>==</code> operator means something different for the two kinds of type:\n-- <b>Structs compare values</b>: two structs are equal when all of their fields are equal\n-- <b>Classes compare identity</b>: two class values are equal only when they are the same instance, even if all their fields hold the same data",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "val p = Point(1, 2)\nval q = Point(1, 2)\nval samePoint = p == q       // true, same values\n\nval first = Player(\"Ace\")\nval second = Player(\"Ace\")\nval alias = first\nval sameName = first == second   // false, two instances\nval sameOne = first == alias     // true, one instance"
+            }
+          ]
+        },
+        {
+          "id": "#enums",
+          "title": "Enums",
+          "content": [
+            "An enum is a fixed set of named values. Members are reached through the enum's name. An enum can give every member a value of one type.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "enum GameState {\n    Menu,\n    Playing,\n    Paused\n}\n\nenum Status: Int {\n    Ok = 200,\n    NotFound = 404\n}\n\nvar state = GameState.Menu\nval paused = state == GameState.Paused"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "#abstraction",
+      "title": "Abstraction",
+      "content": [
+        "Sharing behavior between types."
+      ],
+      "sections": [
+        {
+          "id": "#traits",
+          "title": "Traits",
+          "content": [
+            "A trait is a promise: a list of functions a class has to provide. Trait names start with <code>T</code>. A class lists the traits it implements after a colon, and marks the implementing functions with <code>implement</code>.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "trait TPrintable {\n    fun toText() -> String\n}\n\nclass Dog : TPrintable {\n    implement fun toText() -> String => \"Dog\"\n}"
+            },
+            "A class can implement any number of traits, and a trait can build on other traits with the same colon syntax."
+          ]
+        },
+        {
+          "id": "#inheritance",
+          "title": "Inheritance",
+          "content": [
+            "A class can extend one base class and implement any number of traits. The base class is always listed first. Classes are closed by default: only a class marked <code>open</code> can be extended, and only a function marked <code>open</code> can be implemented again by a derived class. A derived class passes arguments to the constructor of its base class with <code>base(...)</code> after its own parameter list.",
+            {
+              "type": "table",
+              "headers": [
+                "Modifier",
+                "Meaning"
+              ],
+              "rows": [
+                ["<code>open</code>", "the class can be extended, or the function can be implemented again"],
+                ["<code>implement</code>", "implements a trait function or replaces an <code>open</code> function of the base class"]
+              ]
+            },
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "open class Animal {\n    val name: String\n\n    Animal(name: String) {\n        self.name = name\n    }\n\n    open fun sound() -> String => \"...\"\n}\n\nclass Dog : Animal, TPrintable {\n    Dog(name: String) : base(name) { }\n\n    implement fun sound() -> String => \"Woof\"\n    implement fun toText() -> String => name\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "#memory",
+      "title": "Memory",
+      "content": [
+        "Klar has no garbage collector and no pointers. Values live on the stack, class instances are reference counted."
+      ],
+      "sections": [
+        {
+          "id": "#stack-and-heap",
+          "title": "Stack and Heap",
+          "content": [
+            "Local variables, structs and enums live on the stack and are released when their scope ends. Passing a struct to a function copies it, so the function cannot change the caller's value. A function that changes a struct hands the result back.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "fun moved(p: Point, dx: Int, dy: Int) -> Point {\n    var result = p\n    result.offset(dx, dy)\n    return result\n}\n\nval start = Point(10, 20)\nval next = moved(start, 5, 5)   // start is unchanged"
+            },
+            "Class instances live on the heap. Passing a class value passes the reference, so the function sees the same instance as the caller."
+          ]
+        },
+        {
+          "id": "#reference-counting",
+          "title": "Reference Counting",
+          "content": [
+            "Every class instance carries a reference count. The compiler inserts the counting, you never write it.",
+            "-- Constructing a class allocates the instance on the heap and sets the count to 1\n-- Copying a reference, by assigning it or passing it as an argument, increases the count\n-- When a variable goes out of scope, or a <code>var</code> is reassigned, the count of the old value decreases\n-- When the count reaches 0, the destructor runs and the memory is returned",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "fun processPlayer() {\n    val p = Player(\"Enemy\")\n    p.takeDamage(50)\n}   // the count drops to 0 here, the Player is freed"
+            }
+          ]
+        },
+        {
+          "id": "#weak-references",
+          "title": "Weak References",
+          "content": [
+            "Two instances that reference each other keep each other alive forever. Marking one side <code>weak</code> breaks the cycle: it does not count, and it reads as <code>null</code> once the target is gone. A weak reference therefore has to be nullable.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "class Node {\n    var value: String\n    var next: Node? = null\n    weak var parent: Node? = null\n\n    Node(value: String) {\n        self.value = value\n    }\n}"
+            }
+          ]
+        },
+        {
+          "id": "#destructors",
+          "title": "Destructors",
+          "content": [
+            "A destructor runs the moment the reference count reaches zero. It is the place to release things the language does not know about, like native handles. A destructor carries the name of its class and is introduced with <code>destructor</code>.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "class FileStream {\n    val path: String\n\n    FileStream(path: String) {\n        self.path = path\n    }\n\n    destructor FileStream() {\n        // close the native file handle\n    }\n}"
+            }
+          ]
+        },
+        {
+          "id": "#unsafe",
+          "title": "Unsafe",
+          "content": [
+            "An <code>unsafe</code> block marks code whose safety the compiler cannot check by itself. It does not introduce any new syntax: there are no pointers inside it either. Code in an unsafe block is written like all other code.",
+            "Unsafe is reserved for:\n-- calling native code through <a href=\"#organizing_extern\">extern functions</a>, which is only allowed inside an unsafe block\n-- manual memory operations implemented by the standard library",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "unsafe {\n    val root = squareRoot(2d)\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "#organizing",
+      "title": "Organizing Code",
+      "content": [
+        "Modules, imports and visibility, for programs that outgrow a single file."
+      ],
+      "sections": [
+        {
+          "id": "#modules",
+          "title": "Modules",
+          "content": [
+            "A module groups declarations under a dotted lowercase name. It is either wrapped in braces or, when it is the only module of a file, declared once at the top and covers the rest of the file. Declarations outside of any module belong to the global module.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "module game.core {\n    class Enemy { }\n}"
+            },
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "module game.core\n\nclass Player {\n    val name: String\n\n    Player(name: String) {\n        self.name = name\n    }\n}"
+            }
+          ]
+        },
+        {
+          "id": "#imports",
+          "title": "Imports",
+          "content": [
+            "Imports go at the top of a file. <code>import</code> makes everything of a module available, <code>from</code> picks single names. A module can be spread over many files.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "import game.core\nfrom game.core import Player, Enemy"
+            }
+          ]
+        },
+        {
+          "id": "#access",
+          "title": "Access",
+          "content": [
+            "Every declaration can state who may use it. When the modifier is left out, the declaration is <code>public</code>.",
+            {
+              "type": "table",
+              "headers": [
+                "Modifier",
+                "Visible"
+              ],
+              "rows": [
+                ["<code>public</code>", "everywhere, the default"],
+                ["<code>internal</code>", "inside the same library or program"],
+                ["<code>protected</code>", "inside the type and the types extending it"],
+                ["<code>private</code>", "inside the scope that declares it"]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "#modifiers",
+          "title": "Modifiers",
+          "content": [
+            "A declaration is written in a fixed order: annotations, access, modifiers, then the keyword.",
+            {
+              "type": "table",
+              "headers": [
+                "Modifier",
+                "Meaning"
+              ],
+              "rows": [
+                ["<code>open</code>", "the class can be extended, the function can be implemented again, see <a href=\"#abstraction_inheritance\">inheritance</a>"],
+                ["<code>implement</code>", "implements a trait function or an <code>open</code> function of a base class"],
+                ["<code>weak</code>", "a reference that does not count, see <a href=\"#memory_weak-references\">weak references</a>"],
+                ["<code>extern</code>", "the function has no body, a native library provides it, see <a href=\"#organizing_extern\">extern declarations</a>"]
+              ]
+            },
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "class Enemy {\n    private weak var target: Player? = null\n}"
+            }
+          ]
+        },
+        {
+          "id": "#annotations",
+          "title": "Annotations",
+          "content": [
+            "An annotation attaches information to the declaration that follows it. It is written with <code>@</code>. Arguments have to be constants. You can declare your own with <code>annotation</code>.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "annotation Entity(id: Int)\n\n@Entity(7)\nclass Enemy { }"
+            }
+          ]
+        },
+        {
+          "id": "#extern",
+          "title": "Extern Declarations",
+          "content": [
+            "<code>extern</code> marks a function that has no body here because a native library provides it. It is written among the modifiers. The <code>@Library</code> annotation names the library in its first argument. The optional second argument names the native function when it differs from the Klar name. Native functions have to be declared at module level and only use <code>Int</code>, <code>Long</code>, <code>Float</code>, <code>Double</code>, <code>Bool</code>, <code>Byte</code>, <code>Char</code> and <code>String</code>, which are mapped to their C counterparts. They can only be called inside an <a href=\"#memory_unsafe\">unsafe block</a>.",
+            {
+              "type": "code",
+              "lang": "klar",
+              "code": "@Library(\"m\", \"sqrt\") extern fun squareRoot(x: Double) -> Double\n\n@Library(\"m\") extern fun cos(x: Double) -> Double"
+            },
+            "A call goes through a generated wrapper with the Klar signature. <code>Int</code>, <code>Long</code>, <code>Float</code>, <code>Double</code>, <code>Bool</code>, <code>Byte</code> and <code>Char</code> map to <code>int32_t</code>, <code>int64_t</code>, <code>float</code>, <code>double</code>, <code>int8_t</code>, <code>int8_t</code> and <code>uint16_t</code>. A <code>String</code> is passed as a null terminated UTF-8 copy, and a returned <code>const char*</code> is copied into a new <code>String</code>. Other types cannot be passed to native code.",
+            "The first argument of <code>@Library</code> is linked: a plain name like <code>m</code> becomes <code>-lm</code>, a path or a file name with an extension is passed to the linker as it is."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "#reference",
+      "title": "Reference",
+      "sections": [
+        {
+          "id": "#casing",
+          "title": "Casing",
+          "content": [
+            "Casing tells you what a name is without looking at its declaration.",
+            {
+              "type": "table",
+              "headers": [
+                "Case",
+                "Applies to",
+                "Example"
+              ],
+              "rows": [
+                ["PascalCase", "Types, built-in types and annotations", "<code>Int</code>, <code>FileStream</code>"],
+                ["TPascalCase", "Traits", "<code>TPrintable</code>"],
+                ["PascalCase", "Enum members", "<code>GameState.Menu</code>"],
+                ["camelCase", "Functions and methods", "<code>processData()</code>"],
+                ["camelCase", "Fields, local variables and parameters", "<code>retryCount</code>"],
+                ["Type name", "Constructors and destructors", "<code>Player(name: String)</code>"],
+                ["lowercase", "Modules, dot-separated", "<code>game.core</code>"],
+                ["UPPER_CASE", "Constants", "<code>MAX_PLAYERS</code>"]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "#keywords",
+          "title": "Keywords",
+          "content": [
+            {
+              "type": "table",
+              "headers": [
+                "Group",
+                "Keywords"
+              ],
+              "rows": [
+                ["Variables", "<code>val var const</code>"],
+                ["Declarations", "<code>fun struct class enum trait annotation destructor</code>"],
+                ["Access", "<code>public internal protected private</code>"],
+                ["Modifiers", "<code>open implement weak extern</code>"],
+                ["Control flow", "<code>if else while for in break continue return</code>"],
+                ["Modules", "<code>module import from</code>"],
+                ["Values", "<code>true false null self base</code>"],
+                ["Operators as words", "<code>and or</code>"],
+                ["Low level", "<code>unsafe</code>"]
+              ]
+            }
+          ]
+        },
+        {
+          "id": "#precedence",
+          "title": "Operator Precedence",
+          "content": [
+            "From loosest to tightest binding.",
+            {
+              "type": "table",
+              "headers": [
+                "Level",
+                "Operators"
+              ],
+              "rows": [
+                ["1", "<code>or</code>  <code>||</code>"],
+                ["2", "<code>and</code>  <code>&&</code>"],
+                ["3", "<code>|</code>"],
+                ["4", "<code>^</code>"],
+                ["5", "<code>&</code>"],
+                ["6", "<code>==</code>  <code>!=</code>"],
+                ["7", "<code><</code>  <code>></code>  <code><=</code>  <code>>=</code>"],
+                ["8", "<code>..</code>"],
+                ["9", "<code><<</code>  <code>>></code>"],
+                ["10", "<code>+</code>  <code>-</code>"],
+                ["11", "<code>*</code>  <code>/</code>  <code>%</code>"],
+                ["12", "<code>::</code>"],
+                ["13", "member access, call, index"]
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "footer": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Klar Language Specification · v{{version}} · {{status}} — official documentation, subject to change."
+      }
+    ]
+  }
+}
