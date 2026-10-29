@@ -1,5 +1,4 @@
 <div align="center">
-
 <img src="assets/vura.svg" alt="Vura logo" width="128" height="128">
 
 # Vura Docs
