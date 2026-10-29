@@ -7,7 +7,7 @@
 **Documentation site for the Vura programming language.**
 
 ![Version](https://img.shields.io/badge/version-0.1.0-5980a6?style=flat-square)
-![Status](https://img.shields.io/badge/status-work%20in%20progress-d14a08?style=flat-square)
+![Status](https://img.shields.io/badge/status-WIP-d14a08?style=flat-square)
 ![License](https://img.shields.io/badge/license-Unlicense-lightgrey?style=flat-square)
 ![JavaScript](https://img.shields.io/badge/vanilla-JavaScript-f7df1e?style=flat-square&logo=javascript&logoColor=black)
 ![Target](https://img.shields.io/badge/target-LLVM-262d3a?style=flat-square&logo=llvm&logoColor=white)
