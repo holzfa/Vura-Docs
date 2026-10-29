@@ -1,9 +1,9 @@
 {
-  "title": "Aero",
-  "icon": "assets/aero.svg",
+  "title": "Vura",
+  "icon": "assets/vura.svg",
   "default": "#language",
   "variables": {
-    "version": "V0.3.0",
+    "version": "0.1.0",
     "status": "Work In Progress"
   },
   "docs": [
