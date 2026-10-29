@@ -1,0 +1,16 @@
+:root {
+    --paper: #f2f2f3;
+    --paper-raised: #f8f8f9;
+    --paper-high: #e7e7ea;
+    --ink: #1d1f20;
+    --ink-hero: color-mix(in srgb, var(--paper) 88%, transparent);
+    --ink-medium: #424244;
+    --ink-soft: #5d5d60;
+    --steel: #5980a6;
+    --steel-100: #eef6ff;
+    --steel-200: #d6ebff;
+    --steel-300: #b5d9fd;
+    --steel-700: #416180;
+    --steel-800: #2c455d;
+    --deep: #1d2d3d;
+}

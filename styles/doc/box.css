@@ -1,0 +1,33 @@
+.doc-box-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1.5rem;
+}
+
+.doc-box {
+    position: relative;
+    padding: var(--gap-m) 1.1rem;
+    border: 1px solid var(--rule);
+}
+
+.doc-box-head {
+    margin-bottom: 0.6rem;
+}
+
+.doc-box-title {
+    font-size: 1.25rem;
+}
+
+.doc-box-subtitle {
+    margin: 0.15rem 0 0;
+    color: var(--steel-700);
+    font-size: 0.85rem;
+}
+
+.doc-box-content {
+    font-size: 0.95rem;
+}
+
+.doc-box-content .doc-text {
+    max-width: none;
+}

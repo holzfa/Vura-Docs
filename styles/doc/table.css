@@ -1,0 +1,37 @@
+.doc-table-wrap {
+    overflow-x: auto;
+}
+
+.doc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.doc-table-head-cell {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--ink);
+    color: var(--ink);
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.doc-table-cell {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+}
+
+.doc-table-row:hover {
+    background: color-mix(in srgb, var(--ink) 4%, transparent);
+}
+
+.doc-table-plain .doc-table-cell {
+    border: 1px solid var(--rule);
+}
+
+.doc-table-plain .doc-table-cell:first-child {
+    background: var(--steel-100);
+    font-weight: 600;
+}

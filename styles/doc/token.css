@@ -1,0 +1,30 @@
+.doc-tok-keyword {
+    color: var(--steel-800);
+    font-weight: 600;
+}
+
+.doc-tok-type {
+    font-weight: 600;
+}
+
+.doc-tok-string,
+.doc-tok-number {
+    color: var(--steel-700);
+}
+
+.doc-tok-comment {
+    color: #8a8a8d;
+    font-style: italic;
+}
+
+.doc-tok-annotation {
+    color: var(--steel);
+    font-weight: 600;
+}
+
+.doc-tok-function {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--rule);
+    text-underline-offset: 3px;
+}

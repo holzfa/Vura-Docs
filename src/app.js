@@ -229,4 +229,3 @@ if (typeof window !== "undefined" && window.document && window.document.getEleme
   };
   createApp({ window, loadText });
 }
-  

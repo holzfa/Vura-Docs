@@ -1,0 +1,55 @@
+.doc-chapter {
+    scroll-margin-top: 5rem;
+}
+
+.doc-chapter-level-1 {
+    padding-top: var(--gap-xl);
+    border-top: 1px solid var(--rule);
+}
+
+.doc-body > .doc-chapter-level-1:first-child {
+    padding-top: var(--gap-l);
+    border-top: 0;
+}
+
+.doc-chapter-level-2 {
+    margin-top: var(--gap-l);
+}
+
+.doc-chapter-level-3,
+.doc-chapter-level-4 {
+    margin-top: var(--gap-m);
+}
+
+.doc-chapter-title {
+    margin-bottom: var(--gap-m);
+    font-size: 2.25rem;
+}
+
+.doc-chapter-level-2 > .doc-chapter-title {
+    font-size: 1.7rem;
+}
+
+.doc-chapter-level-3 > .doc-chapter-title,
+.doc-chapter-level-4 > .doc-chapter-title {
+    font-size: 1.35rem;
+}
+
+.doc-chapter-tag {
+    display: inline-block;
+    margin-left: 0.75rem;
+    padding: 0 0.55rem;
+    border: 1px solid var(--steel);
+    color: var(--steel-700);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.6;
+    vertical-align: middle;
+}
+
+.doc-chapter-content > .doc-chapter,
+.doc-chapter > .doc-chapter {
+    margin-top: var(--gap-l);
+}

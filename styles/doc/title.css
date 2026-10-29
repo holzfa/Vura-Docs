@@ -1,0 +1,22 @@
+.doc-title,
+.doc-chapter-title,
+.doc-section-title,
+.doc-box-title {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+}
+
+.doc-title::first-letter,
+.doc-chapter-title::first-letter,
+.doc-section-title::first-letter,
+.doc-box-title::first-letter {
+    text-transform: uppercase;
+}
+
+.doc-title {
+    margin-bottom: var(--gap-m);
+    font-size: clamp(2.75rem, 6vw, 4.5rem);
+}

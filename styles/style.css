@@ -1,0 +1,270 @@
+@import "light.css";
+@import "dark.css";
+
+@import "shell.css";
+@import "search.css";
+@import "nav.css";
+
+@import "doc/badge.css";
+@import "doc/box.css";
+@import "doc/callout.css";
+@import "doc/chapter.css";
+@import "doc/corner.css";
+@import "doc/table.css";
+@import "doc/text.css";
+@import "doc/title.css";
+@import "doc/token.css";
+
+:root {
+    --rule: color-mix(in srgb, var(--ink) 16%, transparent);
+    --rule-strong: color-mix(in srgb, var(--ink) 55%, transparent);
+
+    --font-heading: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+    --font-body: "Barlow", system-ui, sans-serif;
+    --font-code: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+    --gap-s: 0.5rem;
+    --gap-m: 1rem;
+    --gap-l: 2rem;
+    --gap-xl: 4rem;
+    --measure: 68ch;
+    --bar-height: 3.5rem;
+    --nav-width: 16.5rem;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 1rem/1.6 var(--font-body);
+}
+
+:focus-visible {
+    outline: 2px solid var(--steel);
+    outline-offset: 2px;
+}
+
+::selection {
+    background: color-mix(in srgb, var(--steel) 30%, transparent);
+}
+
+.doc-body,
+.doc-footer {
+    max-width: 58rem;
+}
+
+.doc-hero {
+    padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.25rem, 4vw, 3rem);
+    background-color: var(--deep);
+    background-image: repeating-linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--paper) 6%, transparent) 0 1px,
+        transparent 1px 7.5rem
+    );
+    color: var(--paper);
+}
+
+.doc-hero > * {
+    max-width: 44rem;
+    color: var(--ink-hero)
+}
+
+.doc-hero .doc-hero-badge {
+    margin-bottom: var(--gap-m);
+    border-color: color-mix(in srgb, var(--paper) 45%, transparent);
+    color: var(--paper);
+}
+
+.doc-description {
+    margin: 0 0 var(--gap-l);
+    max-width: 38rem;
+    font-size: 1.15rem;
+    color: var(--ink-hero)
+}
+
+.doc-description .doc-link {
+    color: var(--steel-200);
+}
+
+.doc-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.doc-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.55rem 1.1rem;
+    border: 1px solid var(--paper);
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+}
+
+.doc-button-primary {
+    background: var(--paper-raised);
+    color: var(--steel);
+}
+
+.doc-button-primary:hover {
+    background: var(--steel-200);
+}
+
+.doc-button-secondary {
+    border-color: var(--paper-raised);
+    border-width: 2px;
+    color: var(--steel);
+}
+
+.doc-button-secondary:hover {
+    background: color-mix(in srgb, var(--paper-raised) 40%, transparent);
+}
+
+.doc-button:focus-visible {
+    outline-color: var(--steel-300);
+}
+
+.doc-body {
+    padding: 0 clamp(1.25rem, 4vw, 3rem);
+}
+
+.doc-chapter-content > * + *,
+.doc-section-content > * + *,
+.doc-box-content > * + *,
+.doc-callout-content > * + * {
+    margin-top: var(--gap-m);
+}
+
+.doc-section-title {
+    margin-bottom: var(--gap-s);
+    font-size: 1.3rem;
+}
+
+.doc-bold {
+    font-weight: 600;
+}
+
+.doc-italic {
+    font-style: italic;
+}
+
+.doc-quote {
+    quotes: "\201C" "\201D";
+    font-style: italic;
+}
+
+.doc-inline-code {
+    padding: 0.05rem 0.35rem;
+    background: color-mix(in srgb, var(--ink) 8%, transparent);
+    font-family: var(--font-code);
+    font-size: 0.9em;
+}
+
+.doc-link {
+    color: var(--steel-700);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+
+.doc-link:hover {
+    background: var(--steel-100);
+    color: var(--steel-800);
+}
+
+.doc-link-dead {
+    text-decoration: none;
+    outline: 1px dashed currentColor;
+    outline-offset: 2px;
+    color: var(--ink-soft);
+}
+
+.doc-code {
+    margin: 0;
+    border: 1px solid var(--rule);
+    background: var(--paper-raised);
+}
+
+.doc-code-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-m);
+    min-height: 2.2rem;
+    padding: 0.25rem 0.5rem 0.25rem 0.9rem;
+    border-bottom: 1px solid var(--rule);
+}
+
+.doc-code-title {
+    color: var(--ink-soft);
+    font-size: 0.8rem;
+}
+
+.doc-code-copy {
+    margin-left: auto;
+    padding: 0.15rem 0.65rem;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--steel-700);
+    font: 500 0.75rem/1.5 var(--font-body);
+    cursor: pointer;
+}
+
+.doc-code-copy:hover {
+    background: var(--steel-100);
+}
+
+.doc-code-pre {
+    margin: 0;
+    padding: 0.9rem 1rem;
+    overflow-x: auto;
+    tab-size: 4;
+}
+
+.doc-code-source {
+    font-family: var(--font-code);
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.doc-footer {
+    margin: var(--gap-xl) clamp(1.25rem, 4vw, 3rem) 0;
+    padding: var(--gap-m) 0 var(--gap-l);
+    border-top: 1px solid var(--rule);
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.doc-footer .doc-text {
+    margin: 0 auto;
+}
+
+@media (max-width: 40rem) {
+    .doc-box-group {
+        grid-template-columns: 1fr;
+    }
+
+    .doc-chapter-level-1 {
+        padding-top: var(--gap-l);
+    }
+
+    .doc-chapter-title {
+        font-size: 1.9rem;
+    }
+}

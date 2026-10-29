@@ -1,0 +1,29 @@
+.doc-badge-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-s);
+}
+
+.doc-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.1rem 0.65rem;
+    border: 1px solid transparent;
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.doc-badge-accent {
+    background: var(--steel-100);
+    color: var(--steel-800);
+}
+
+.doc-badge-neutral {
+    background: var(--paper-high);
+    color: var(--ink-medium)
+}
+
+.doc-badge-outline {
+    border-color: var(--steel);
+    color: var(--steel-700);
+}

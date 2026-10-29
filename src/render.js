@@ -261,4 +261,3 @@ export function renderSearchResults(results, query, templates) {
 export function renderError(templates, message) {
   return part({ templates }, "shell", "error", { message });
     }
-    

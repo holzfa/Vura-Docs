@@ -1,0 +1,18 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #14181c;
+    --paper-raised: #1b2026;
+    --paper-high: #2a2f35;
+    --ink: #e6e8ea;
+    --ink-hero: #e6e8ea;
+    --ink-medium: #c3c7cc;
+    --ink-soft: #9aa1a8;
+    --steel: #7fa6cc;
+    --steel-100: #1c2b3a;
+    --steel-200: #26394d;
+    --steel-300: #36516b;
+    --steel-700: #8fb4d8;
+    --steel-800: #b5d3ee;
+    --deep: #0e1620;
+  }
+}

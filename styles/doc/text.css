@@ -1,0 +1,30 @@
+.doc-text,
+.doc-section-text {
+    max-width: var(--measure);
+}
+
+.doc-text-paragraph {
+    margin: 0;
+}
+
+.doc-text-paragraph + .doc-text-paragraph,
+.doc-text-paragraph + .doc-text-list,
+.doc-text-list + .doc-text-paragraph,
+.doc-text-list + .doc-text-list {
+    margin-top: 0.75rem;
+}
+
+.doc-text-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    list-style: square;
+}
+
+.doc-text-list::marker,
+.doc-text-item::marker {
+    color: var(--steel);
+}
+
+.doc-text-item + .doc-text-item {
+    margin-top: 0.3rem;
+}
