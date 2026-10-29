@@ -12,7 +12,7 @@
 ![JavaScript](https://img.shields.io/badge/vanilla-JavaScript-f7df1e?style=flat-square&logo=javascript&logoColor=black)
 ![Target](https://img.shields.io/badge/target-LLVM-262d3a?style=flat-square&logo=llvm&logoColor=white)
 
-[Read the docs](#) · [Report an issue](../../issues)
+[Read the docs](holzfa.github.io/Vura-Docs/) · [Report an issue](../../issues)
 
 </div>
 
